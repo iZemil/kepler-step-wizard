@@ -1,75 +1,67 @@
 {
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "npmScope": "kepler-step-wizard",
-    "tasksRunnerOptions": {
-        "default": {
-            "runner": "@nrwl/nx-cloud",
-            "options": {
-                "cacheableOperations": [
-                    "build",
-                    "lint",
-                    "test",
-                    "e2e"
-                ],
-                "accessToken": "MTEwMjgwY2UtYWUyOC00YmFjLThiZGQtMDkyNmZjYjQwYzMwfHJlYWQtd3JpdGU="
-            }
-        }
-    },
-    "targetDefaults": {
-        "build": {
-            "dependsOn": [
-                "^build"
-            ],
-            "inputs": [
-                "production",
-                "^production"
-            ]
-        },
-        "e2e": {
-            "inputs": [
-                "default",
-                "^production"
-            ]
-        },
-        "lint": {
-            "inputs": [
-                "default",
-                "{workspaceRoot}/.eslintrc.json",
-                "{workspaceRoot}/.eslintignore"
-            ]
-        }
-    },
-    "namedInputs": {
-        "default": [
-            "{projectRoot}/**/*",
-            "sharedGlobals"
-        ],
-        "production": [
-            "default",
-            "!{projectRoot}/.eslintrc.json",
-            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-            "!{projectRoot}/tsconfig.spec.json"
-        ],
-        "sharedGlobals": [
-            "{workspaceRoot}/babel.config.json"
-        ]
-    },
-    "generators": {
-        "@nrwl/react": {
-            "application": {
-                "style": "scss",
-                "linter": "eslint",
-                "bundler": "webpack",
-                "babel": true
-            },
-            "component": {
-                "style": "scss"
-            },
-            "library": {
-                "style": "scss",
-                "linter": "eslint"
-            }
-        }
-    },
-    "defaultProject": "kepler-step-wizard"
+	"$schema": "./node_modules/nx/schemas/nx-schema.json",
+	"npmScope": "kepler-wizard",
+	"tasksRunnerOptions": {
+		"default": {
+			"runner": "@nrwl/nx-cloud",
+			"options": {
+				"cacheableOperations": [
+					"build",
+					"lint",
+					"test",
+					"e2e"
+				],
+				"accessToken": "ZDYyNWQ2NmItZDAzZC00MDdiLTllOTItZTVhMTgzNjQ0Njk4fHJlYWQtd3JpdGU="
+			}
+		}
+	},
+	"targetDefaults": {
+		"build": {
+			"dependsOn": [
+				"^build"
+			],
+			"inputs": [
+				"production",
+				"^production"
+			]
+		},
+		"lint": {
+			"inputs": [
+				"default",
+				"{workspaceRoot}/.eslintrc.json"
+			]
+		}
+	},
+	"namedInputs": {
+		"default": [
+			"{projectRoot}/**/*",
+			"sharedGlobals"
+		],
+		"production": [
+			"default",
+			"!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+			"!{projectRoot}/tsconfig.spec.json",
+			"!{projectRoot}/.eslintrc.json"
+		],
+		"sharedGlobals": [
+			"{workspaceRoot}/babel.config.json"
+		]
+	},
+	"workspaceLayout": {
+		"appsDir": "packages",
+		"libsDir": "libs"
+	},
+	"generators": {
+		"@nrwl/web:application": {
+			"style": "css",
+			"linter": "eslint",
+			"unitTestRunner": "jest",
+			"e2eTestRunner": "cypress"
+		},
+		"@nrwl/web:library": {
+			"style": "css",
+			"linter": "eslint",
+			"unitTestRunner": "jest"
+		}
+	}
 }

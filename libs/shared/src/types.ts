@@ -13,23 +13,18 @@ export interface IOption {
 	title: string;
 }
 
+export type TAnswer = string | number[];
+
 export interface IQuestion {
 	title: string;
 	type: EQuestionType;
 	options?: IOption[];
+	answer: TAnswer;
 }
 
 export interface IWizard {
+	id?: string;
 	title: string;
 	description: string;
 	questions: IQuestion[];
 }
-
-export interface IResult {
-	index: number;
-	options?: number[];
-	input?: string;
-}
-export type TResult = {
-	data: IResult[];
-};

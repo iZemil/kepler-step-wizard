@@ -13,7 +13,7 @@ Your job is to create a multi-step wizard.
 
 You should implement such functionality in Angular. You can’t use any 3rd party plugins which already implement this solution.
 
-You could safely assume that each step is configured on the “backend” through the JSON  config file. The actual structure of the file is up to you to decide.
+You could safely assume that each step is configured on the “backend” through the JSON config file. The actual structure of the file is up to you to decide.
 
 If you have enough backend knowledge, please consider demonstrating it by adding simple ORM integration, message queues, caches, etc. if you think it’s necessary.
 
