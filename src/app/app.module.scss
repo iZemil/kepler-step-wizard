@@ -1,0 +1,29 @@
+.app {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: seagreen;
+}
+
+.questions {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.question {
+	max-width: 480px;
+	position: absolute;
+
+	transition: 0.3s;
+	opacity: 0;
+	transform: scale(0.95);
+	pointer-events: none;
+
+	&_active {
+		opacity: 1;
+		transform: scale(1);
+		pointer-events: all;
+	}
+}
