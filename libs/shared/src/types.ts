@@ -24,3 +24,12 @@ export interface IWizard {
 	description: string;
 	questions: IQuestion[];
 }
+
+export interface IResult {
+	index: number;
+	options?: number[];
+	input?: string;
+}
+export type TResult = {
+	data: IResult[];
+};

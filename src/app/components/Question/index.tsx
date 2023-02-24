@@ -1,15 +1,15 @@
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
-import { IQuestion, EQuestionType } from '@shared';
+import { IQuestion, EQuestionType, IResult } from '@shared';
 
 import styles from './styles.module.scss';
-import React, { useState } from 'react';
 
 interface IProps {
 	className?: string;
 	data: IQuestion;
 	children?: React.ReactNode;
-	onChange: () => void;
+	onChange: (result: Omit<IResult, 'index'>) => void;
 }
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -20,15 +20,15 @@ export const Question = (props: IProps) => {
 		children,
 		onChange,
 	} = props;
-	const [value, updateValue] = useState(() => ({
+	const [result, updateResult] = useState(() => ({
 		options: Object.fromEntries(options.map((o, ndx) => [ndx, false])),
-		value: '',
+		input: '',
 	}));
 
 	const handleOption = (ndx: number) => {
 		if (type === EQuestionType.single) {
-			updateValue({
-				...value,
+			updateResult({
+				...result,
 				options: {
 					...Object.fromEntries(options.map((o, ndx) => [ndx, false])),
 					[ndx]: true,
@@ -37,15 +37,36 @@ export const Question = (props: IProps) => {
 		}
 
 		if (type === EQuestionType.multi) {
-			updateValue({
-				...value,
+			updateResult({
+				...result,
 				options: {
-					...value.options,
-					[ndx]: !value.options[ndx],
+					...result.options,
+					[ndx]: !result.options[ndx],
 				},
 			});
 		}
 	};
+
+	const handleChange = (input: string) => {
+		updateResult({
+			...result,
+			input,
+		});
+	};
+
+	useEffect(() => {
+		const activeOptions: number[] = [];
+		Object.entries(result.options).forEach(([index, isActive]) => {
+			if (isActive) {
+				activeOptions.push(Number(index));
+			}
+		});
+
+		onChange({
+			input: result.input,
+			options: activeOptions,
+		});
+	}, [result]);
 
 	return (
 		<div className={clsx(styles.question, className)}>
@@ -55,7 +76,7 @@ export const Question = (props: IProps) => {
 				{(type === EQuestionType.multi || type === EQuestionType.single) && (
 					<div className={clsx(styles.optionList)}>
 						{options.map((it, ndx) => {
-							const isActive = value.options[ndx];
+							const isActive = result.options[ndx];
 							let mark = '';
 							if (type === EQuestionType.single) {
 								mark = isActive ? '✔️' : '🔘';
@@ -71,16 +92,20 @@ export const Question = (props: IProps) => {
 									onClick={() => handleOption(ndx)}
 								>
 									{ALPHABET[ndx]}. {it.title}
-									<div className={clsx(styles.optionValue)}>{mark}</div>
+									<span>{mark}</span>
 								</button>
 							);
 						})}
 					</div>
 				)}
 
-				{type === EQuestionType.number && <input type="number" />}
+				{type === EQuestionType.number && (
+					<input type="number" value={result.input} onChange={(e) => handleChange(e.target.value)} />
+				)}
 
-				{type === EQuestionType.text && <input type="text" />}
+				{type === EQuestionType.text && (
+					<textarea value={result.input} onChange={(e) => handleChange(e.target.value)} />
+				)}
 			</div>
 
 			{children}
