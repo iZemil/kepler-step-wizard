@@ -22,7 +22,7 @@ export interface IQuestion {
 	answer: TAnswer;
 }
 
-export interface IWizard {
+export interface IQuiz {
 	id?: string;
 	title: string;
 	description: string;

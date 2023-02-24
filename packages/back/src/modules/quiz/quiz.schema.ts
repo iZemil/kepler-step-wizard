@@ -1,3 +1,3 @@
-import { IWizard } from '@shared';
+import { IQuiz } from '@shared';
 
-export type QuizSchema = IWizard;
+export type QuizSchema = IQuiz;

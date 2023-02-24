@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IWizard } from '@shared';
+import { IQuiz } from '@shared';
 
 import { api } from '../utils';
 
@@ -7,7 +7,7 @@ import { Quiz } from './components';
 import './global.scss';
 
 export default function App() {
-	const [data, updateData] = useState<IWizard[]>();
+	const [data, updateData] = useState<IQuiz[]>();
 
 	const fetchQuiz = async () => {
 		try {
@@ -28,7 +28,7 @@ export default function App() {
 	}
 
 	if (data.length === 0) {
-		return <>Quizes not found...</>;
+		return <>Data not found...</>;
 	}
 
 	return <Quiz data={data[0]} />;

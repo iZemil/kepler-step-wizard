@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
 
-import { IWizard, ResultDto, ResultResponseDto } from '@shared';
+import { IQuiz, ResultDto, ResultResponseDto } from '@shared';
 
 import { api } from '../../../utils';
 
 import styles from './styles.module.scss';
 
 interface IProps {
-	wizard: IWizard;
+	quiz: IQuiz;
 	data: ResultDto;
 	onRestart: () => void;
 }
 export const Result = (props: IProps) => {
-	const { wizard, data, onRestart } = props;
+	const { quiz, data, onRestart } = props;
 	const [result, updateResult] = useState<ResultResponseDto>();
 
 	const fetchResult = async () => {
 		try {
-			const result = await api.sendResult(wizard.id ?? '', data);
+			const result = await api.sendResult(quiz.id ?? '', data);
 
 			updateResult(result);
 		} catch (err) {

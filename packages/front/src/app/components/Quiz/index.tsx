@@ -1,14 +1,14 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-import { TAnswer, ResultDto, IWizard } from '@shared';
+import { TAnswer, ResultDto, IQuiz } from '@shared';
 
 import { Question, Result, Starter } from '../';
 
 import styles from './styles.module.scss';
 
 interface IProps {
-	data: IWizard;
+	data: IQuiz;
 }
 export function Quiz(props: IProps) {
 	const { data } = props;
@@ -76,7 +76,7 @@ export function Quiz(props: IProps) {
 			)}
 
 			{activeIndex === questions.length && (
-				<Result wizard={data} data={answers} onRestart={() => handleStart(true)} />
+				<Result quiz={data} data={answers} onRestart={() => handleStart(true)} />
 			)}
 		</div>
 	);
