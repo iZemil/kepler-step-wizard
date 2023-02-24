@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 
 import { IQuestion, EQuestionType, TAnswer } from '@shared';
@@ -14,6 +14,18 @@ interface IProps {
 }
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const getMark = (type: EQuestionType, isActive: boolean) => {
+	let mark = '';
+	if (type === EQuestionType.single) {
+		mark = isActive ? '✔️' : '🔘';
+	}
+	if (type === EQuestionType.multi) {
+		mark = isActive ? '✔️' : '🔲';
+	}
+
+	return mark;
+};
+
 export const Question = (props: IProps) => {
 	const {
 		data: { title, type, options = [] },
@@ -44,34 +56,18 @@ export const Question = (props: IProps) => {
 			<div className={styles.questionContent}>
 				{(type === EQuestionType.multi || type === EQuestionType.single) && (
 					<div className={clsx(styles.optionList)}>
-						{options.map((it, ndx) => {
-							const isActive = (answer as number[]).includes(ndx);
-							let mark = '';
-							if (type === EQuestionType.single) {
-								mark = isActive ? '✔️' : '🔘';
-							}
-							if (type === EQuestionType.multi) {
-								mark = isActive ? '✔️' : '🔲';
-							}
-
-							return (
-								<button
-									key={it.title}
-									className={clsx(styles.option)}
-									onClick={() => handleOption(ndx)}
-								>
-									{ALPHABET[ndx]}. {it.title}
-									<span>{mark}</span>
-								</button>
-							);
-						})}
+						{options.map((it, ndx) => (
+							<button key={it.title} className={clsx(styles.option)} onClick={() => handleOption(ndx)}>
+								{ALPHABET[ndx]}. {it.title}
+								<span>{getMark(type, (answer as number[]).includes(ndx))}</span>
+							</button>
+						))}
 					</div>
 				)}
 
 				{type === EQuestionType.number && (
 					<input type="number" value={answer as string} onChange={(e) => onChange(e.target.value)} />
 				)}
-
 				{type === EQuestionType.text && (
 					<textarea value={answer as string} onChange={(e) => onChange(e.target.value)} />
 				)}

@@ -4,11 +4,11 @@
 
 ## Development
 
--   install nodejs and npm
+-   install nodejs and docker compose
 -   install node dependencies `npm ci`
 -   set up [default env variables](./.env)
--   run docker db `npm run db`
+-   run docker mongodb `npm run db`
 -   run development services:
-    -   frontend [fron app](./packages/front/src/main.tsx) `npm run dev:front`
-    -   develop [back app](./packages/back/src/main.ts) `npm run dev:back`
+    -   front [fron app](./packages/front/src/main.tsx) `npm run dev:front`
+    -   back [back app](./packages/back/src/main.ts) `npm run dev:back`
     -   or both `npm run dev`
