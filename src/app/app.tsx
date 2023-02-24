@@ -1,62 +1,58 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
+import { MOCK } from '@shared';
+
 import styles from './app.module.scss';
-import { Question } from './components';
+import { Question, Result, Starter } from './components';
 import './global.scss';
 
-export enum EQuestionType {
-	/** single-choice question */
-	single = 'single',
-	/** multi-choice question */
-	multi = 'multi',
-	/** text input question */
-	text = 'text',
-	/** number input quesion */
-	number = 'number',
-}
-
-export interface IQuestion {
-	title: string;
-	type?: EQuestionType;
-	options?: {
-		title: string;
-	};
-}
-
-export interface IWizard {
-	title: string;
-	description: string;
-	questions: IQuestion[];
-}
-
-const MOCK: IWizard = {
-	title: '',
-	description: '',
-	questions: [
-		{ title: "Let's start by having a quick look in the mirror: how's your complexion?" },
-		{ title: 'And how would you describe your pores?' },
-		{ title: 'Does your skin get red much?' },
-		{ title: 'Do you get breakouts and what are they like?' },
-		{ title: 'What does your skin feel like after moisturizing?' },
-	],
-};
-
 export default function App() {
-	const [activeIndex, setActiveIndex] = useState(0);
+	const data = MOCK;
+	const { title, description, questions } = data;
+	const [activeIndex, setActiveIndex] = useState(-1);
+	const handlePrev = () => setActiveIndex(activeIndex - 1);
+	const handleNext = () => setActiveIndex(activeIndex + 1);
+	const handleRestart = () => {
+		setActiveIndex(-1);
+	};
+	const handleStart = () => {
+		setActiveIndex(0);
+	};
+	const handleChange = () => {};
+
+	const isStart = activeIndex < 0;
+	const isProgress = !isStart && activeIndex < questions.length;
 
 	return (
 		<div className={styles.app}>
-			<div className={styles.questions}>
-				{MOCK.questions.map((step, index) => (
-					<Question
-						key={step.title}
-						className={clsx(styles.question, { [styles.question_active]: activeIndex === index })}
-						title={step.title}
-						onNext={() => setActiveIndex(activeIndex + 1)}
-					/>
-				))}
-			</div>
+			{activeIndex < 0 && <Starter title={title} description={description} onStart={handleStart} />}
+
+			{isProgress && (
+				<>
+					<div className={styles.appStep}>
+						{activeIndex + 1}/{questions.length}
+					</div>
+
+					<div className={styles.questions}>
+						{questions.map((it, index) => (
+							<Question
+								key={it.title}
+								className={clsx(styles.question, { [styles.question_active]: activeIndex === index })}
+								data={it}
+								onChange={handleChange}
+							>
+								<div className={styles.questionsNav}>
+									<button onClick={handlePrev}>Prev</button>
+									<button onClick={handleNext}>Next</button>
+								</div>
+							</Question>
+						))}
+					</div>
+				</>
+			)}
+
+			{activeIndex === questions.length && <Result onRestart={handleRestart} />}
 		</div>
 	);
 }

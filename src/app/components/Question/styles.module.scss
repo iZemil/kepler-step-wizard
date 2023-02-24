@@ -12,5 +12,21 @@
 	}
 }
 
-.button {
+.option {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: space-between;
+	padding: 5px;
+	text-align: left;
+	cursor: pointer;
+
+	&Value {
+	}
+
+	&List {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
 }

@@ -4,12 +4,26 @@
 	align-items: center;
 	justify-content: center;
 	background: seagreen;
+
+	&Step {
+		position: fixed;
+		top: 0;
+		right: 0;
+		padding: 20px;
+	}
 }
 
 .questions {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	&Nav {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 10px;
+	}
 }
 
 .question {
